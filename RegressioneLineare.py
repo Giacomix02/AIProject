@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 def RegressioneLineareTrain():
-    df = pd.read_csv('Dataset/archive/train.csv', skipinitialspace=True, usecols=['topic'])
+    df = pd.read_csv('DatasetV1/archive/train.csv', skipinitialspace=True, usecols=['topic'])
     numberOfEntriesPerTopic = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for i in df.values:
         numberOfEntriesPerTopic[int(i[0])] = numberOfEntriesPerTopic[int(i[0])] + 1
     return numberOfEntriesPerTopic
 
 def RegressioneLineareTest():
-    df1 = pd.read_csv('Dataset/archive/test.csv', skipinitialspace=True, usecols=['topic'])
+    df1 = pd.read_csv('DatasetV1/archive/test.csv', skipinitialspace=True, usecols=['topic'])
     numberOfEntriesPerTopic = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for i in df1.values:
         numberOfEntriesPerTopic[int(i[0])] = numberOfEntriesPerTopic[int(i[0])] + 1
@@ -20,8 +20,8 @@ def RegressioneLineareTest():
 
 
 # # Assuming 'topic' is the column you are interested in
-# df = pd.read_csv('Dataset/archive/train.csv', skipinitialspace=True, usecols=['topic'])
-# df1 = pd.read_csv('Dataset/archive/test.csv', skipinitialspace=True, usecols=['topic'])
+# df = pd.read_csv('Dataset v1/archive/train.csv', skipinitialspace=True, usecols=['topic'])
+# df1 = pd.read_csv('Dataset v1/archive/test.csv', skipinitialspace=True, usecols=['topic'])
 #
 # X_test = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).reshape(-1, 1)  # Reshape to 2D array
 # X_train = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).reshape(-1, 1)  # Reshape to 2D array

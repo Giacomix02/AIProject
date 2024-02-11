@@ -17,5 +17,5 @@ Project output:
 
 Dataset versions:
 - 1: base
-- 2: topics convertiti da numero a stringa, e join tra colonne question_title e question_content
+- 2: join tra colonne question_title e question_content
 - 3: rimozione di stop-words
