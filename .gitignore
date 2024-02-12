@@ -11,9 +11,7 @@
 .idea/
 /DatasetV1
 archive.zip
-/Code/Dataset/
-/Dataset
-Code/Dataset
+Code/Dataset/archive/*
 train.csv
 test.csv
 *.csv
