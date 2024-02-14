@@ -1,4 +1,4 @@
-from bottle import run, route, get, post, request, FormsDict
+from bottle import run, route, get, post, request, FormsDict, response
 from joblib import load
 from sklearn.pipeline import Pipeline as Pipeline
 from NLTKVectorizer import NLTKVectorizer
@@ -10,6 +10,7 @@ DEBUG = True
 
 # decidere se usare direttamente il modello presettato (True) o obbligare l'utente a caricare il modello
 CUSTOM = False
+
 model_pipeline: Pipeline = None if CUSTOM else load("../dump/model.joblib")
 
 NLTKVectorizer = NLTKVectorizer()
@@ -63,13 +64,19 @@ def predict_post():
 
     return jsondump(prediction_dict)
 
-
 @post("/predict")  # predict ufficiale
 def predict_post():
     global model_pipeline
-    submitted: FormsDict = request.get("text")
+    submitted: FormsDict = request.query["text"]
+
+    if submitted is None:
+        return "no text"
 
     prediction = model_pipeline.predict_proba([submitted])
+
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'PUT, GET, POST, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
     return str(prediction)
 
