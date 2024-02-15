@@ -1,7 +1,7 @@
 from bottle import run, route, get, post, request, FormsDict, response
 from joblib import load
 from sklearn.pipeline import Pipeline as Pipeline
-from NLTKVectorizer import NLTKVectorizer
+from Code.NLTKVectorizer import NLTKVectorizer
 from numpy import ndarray
 from json import dumps as jsondump
 
