@@ -78,7 +78,9 @@ def predict_post():
     response.headers['Access-Control-Allow-Methods'] = 'PUT, GET, POST, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
-    return str(prediction)
+    prediction_dict: dict = ndarray_to_dict(prediction)
+
+    return jsondump(prediction_dict)
 
 
 run(host='localhost', port=8080, debug=True, reloader=True if DEBUG else None)
