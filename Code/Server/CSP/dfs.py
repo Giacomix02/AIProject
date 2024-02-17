@@ -1,4 +1,4 @@
-from constraintGraph import Constraint, showConstraintFail
+
 
 tab = "\t"
 resultString = None
@@ -18,7 +18,6 @@ def dfs_solver(constraints, context: dict, var_order):
     """
     to_eval = {c for c in constraints if c.can_evaluate(context)}
     result = all(c.holds(context) for c in to_eval)
-
     if result:
         if var_order == []:
             yield context

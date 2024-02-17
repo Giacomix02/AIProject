@@ -1,37 +1,43 @@
-from constraint import *
+from copy import deepcopy
+
+from constraintGraph import Variable, Constraint, renderGraph
+from dfs import dfs_solve_all
 
 
 def run_csp(values: list, results_limit: int = None, upper_limit: int = None, lower_limit: int = None) -> list:
-    porco = Problem()
+    if values is None:
+        return None
 
-    if results_limit is None:
-        results_limit = 10
+    domain = [1, 0]
+    variables = []
+    for i in range(0, 10):
+        variables.append(Variable("X" + str(i), domain=domain))
+        variables.append(Variable('V' + str(i), [values[i]]))
+
+    # if results_limit is None:
+    #     results_limit = 10
     if upper_limit is None:
-        upper_limit = 100
+        upper_limit = 101
     if lower_limit is None:
-        lower_limit = 0
+        lower_limit = -1
+    constraint = []
 
-    for index in range(0, len(values)):
-        porco.addVariable(variable=index, domain=[0, 1])
-        temp = "X" + str(index)
-        porco.addVariable(temp, [values[index]])
-
-    porco.addVariable('results_limit', [results_limit])
-    porco.addVariable('upper_limit', [upper_limit])
-    porco.addVariable('lower_limit', [lower_limit])
-
-    # print(porco.getSolutions())
-    porco.addConstraint(lambda a, b, c, d, e, f, g, h, j, m, n:
-                        a + b + c + d + e + f + g + h + j + m <= n,
-                        (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'results_limit'))
-    for index in range(0, len(values)):
-        temp = "X" + str(index)
-        porco.addConstraint(times_le, (index, temp, 'upper_limit'))
-        porco.addConstraint(times_ge, (index, temp, 'lower_limit'))
-
-    sol = porco.getSolutions()
-    print(sol)
-    return sol
+    # constraint.append(Constraint([variables[i] for i in range(0, 20, 2)],
+    #                              lambda a, b, c, d, e, f, g, h, j, m:
+    #                              a + b + c + d + e + f + g + h + j + m <= results_limit,
+    #                              f"sum(X0, ... ,X9) <= {results_limit}"
+    #                              )
+    #                   )
+    j = 0
+    for i in range(0, 20, 2):
+        print(variables[i], variables[i + 1])
+        constraint.append(Constraint([variables[i], variables[i + 1]],
+                                     lambda x, y:
+                                     (lower_limit <= y <= upper_limit and x == 1) or (not (lower_limit <= y <= upper_limit) and x == 0) or var_sum <= results_limit,
+                                     f"{lower_limit} <= X{j}*{values[j]} <= {upper_limit}"))
+        j += 1
+    csp = renderGraph(variables, constraint)
+    return dfs_solve_all(csp)
 
 
 def times_le(x, y, z):
