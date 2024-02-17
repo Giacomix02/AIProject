@@ -4,6 +4,7 @@ from sklearn.pipeline import Pipeline as Pipeline
 from Code.NLTKVectorizer import NLTKVectorizer
 from numpy import ndarray
 from json import dumps as jsondump
+from CSP.CSP_main import run_csp
 
 # decidere se avere cambiamenti del server in realtime mentre si modifica il .py (True)
 DEBUG = True
@@ -64,6 +65,7 @@ def predict_post():
 
     return jsondump(prediction_dict)
 
+
 @post("/predict")  # predict ufficiale
 def predict_post():
     global model_pipeline
@@ -79,6 +81,8 @@ def predict_post():
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
     prediction_dict: dict = ndarray_to_dict(prediction)
+
+    run_csp([])  # TODO: far passare i dati per il csp
 
     return jsondump(prediction_dict)
 
