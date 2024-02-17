@@ -11,9 +11,6 @@ let lowerLimit = document.getElementById("lower-limit") as HTMLInputElement
 
 let data: JSON
 
-createRow(2, 0.5)
-
-
 /*check if the input have text, and abilitate it*/
 inputText.oninput = () => {
     if (inputText.value.length > 0) {
