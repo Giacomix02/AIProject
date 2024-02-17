@@ -37,8 +37,8 @@ def load_server():
 def predict_post():
     global model_pipeline
     submitted = request.query["text"]  # ricevo il testo per cui fare la prediction
-    lower_limit = request.query["lower_limit"]  # ricevo il limite minore per il filtro (opzionale)
-    upper_limit = request.query["upper_limit"]  # ricevo il limite superiore per il filtro (opzionale)
+    lower_limit = int(request.query["lower_limit"])  # ricevo il limite minore per il filtro (opzionale)
+    upper_limit = int(request.query["upper_limit"])  # ricevo il limite superiore per il filtro (opzionale)
 
     if submitted is None:
         return "no text"
