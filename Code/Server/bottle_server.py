@@ -58,14 +58,14 @@ def predict_post():
     prediction = prediction[0]
     prediction_list = prediction.tolist()  # converto l'ndarray interno in una lista
 
-    prediction_integer = []  # riceverà i valori della prediction convertiti in integer
+    prediction_float = []  # riceverà i valori della prediction convertiti in float
     for pred in prediction_list:
-        pred *= 100
-        round(pred, 3)
-        prediction_integer.append(int(pred))
+        pred = float(pred)*100
+        pred = round(pred, 2)
+        prediction_float.append(pred)
 
     if lower_limit is not None or upper_limit is not None:  # se uno o più dei limiti sono specificati
-        returned = run_csp(prediction_integer,  # effettuo la ricerca dei valori entro i limiti inseriti
+        returned = run_csp(prediction_float,  # effettuo la ricerca dei valori entro i limiti inseriti
                            lower_limit=lower_limit,
                            upper_limit=upper_limit)
         # il risultato di run_csp sarà una tupla composta da: variabili di csp e risultati della computazione
@@ -80,7 +80,7 @@ def predict_post():
                 number = int(str(var_x)[1])  # prendo il numero
                 to_return[number] = results[var_v]  # lo aggiungo al dizionario da ritornare
     else:  # nel caso in cui non specifico limiti
-        to_return: dict = list_to_dict(prediction_integer)  # converto la lista della prediction in un dizionario
+        to_return: dict = list_to_dict(prediction_float)  # converto la lista della prediction in un dizionario
 
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'PUT, GET, POST, DELETE, OPTIONS'
@@ -118,9 +118,10 @@ def predict_post():
     prediction_list = prediction.tolist()
     prediction_integer = []
     for pred in prediction_list:
+        pred = float(pred)
         pred *= 100
-        round(pred, 3)
-        prediction_integer.append(int(pred))
+        pred = round(pred, 2)
+        prediction_integer.append(pred)
     returned = run_csp(prediction_integer,
                        lower_limit=None, upper_limit=None)
     results: dict = returned[1]
