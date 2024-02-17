@@ -1,7 +1,6 @@
 from bottle import run, route, get, post, request, FormsDict, response
 from joblib import load
 from sklearn.pipeline import Pipeline as Pipeline
-from Code.NLTKVectorizer import NLTKVectorizer
 from numpy import ndarray
 from json import dumps as jsondump
 from CSP.CSP_main import run_csp
@@ -12,9 +11,10 @@ DEBUG = True
 # decidere se usare direttamente il modello presettato (True) o obbligare l'utente a caricare il modello
 CUSTOM = False
 
+
 model_pipeline: Pipeline = None if CUSTOM else load("../dump/model.joblib")
 
-NLTKVectorizer = NLTKVectorizer()
+
 
 
 ###################### metodi e classi di supporto
@@ -71,6 +71,7 @@ def predict_post():
     global model_pipeline
     submitted: FormsDict = request.query["text"]
 
+
     if submitted is None:
         return "no text"
 
@@ -86,8 +87,7 @@ def predict_post():
 
     csp = run_csp(prediction, lower_limit=80)  # TODO: far passare i dati per il csp, fare che il lower limit è a scelta per l'utente
 
-
-    array = []      # sequanza di 0 e 1 che indicano se il topic è da prendere o meno
+    array = []      # sequenza di 0 e 1 che indicano se il topic è da prendere o meno
     for key in csp[0]:
         if "X" in str(key):
             array.append(dict[key])

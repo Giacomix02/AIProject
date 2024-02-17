@@ -1,6 +1,5 @@
-from constraintGraph import Variable, Constraint, renderGraph
-from dfs import dfs_solve_all
-
+from Code.Server.CSP.constraintGraph import Variable, Constraint, renderGraph
+from Code.Server.CSP.dfs import dfs_solve_all
 
 def run_csp(values: list, results_limit: int = None, upper_limit: int = None, lower_limit: int = None) -> list:
     if values is None:

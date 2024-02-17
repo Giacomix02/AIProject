@@ -1,8 +1,11 @@
 # from enum import Enum
 import random
 from matplotlib import pyplot as plt
+
 PAUSE = True
 PAUSE_LENGTH = 0.2
+
+
 class Variable(object):
     """A random variable.
     name (string) - name of the variable
@@ -53,7 +56,7 @@ class Constraint(object):
         assignment is a variable:value dictionary
         returns True if the constraint can be evaluated given assignment
         """
-        return all(v in assignment for v in self.scope) #and len(self.scope) == len(assignment)
+        return all(v in assignment for v in self.scope)  # and len(self.scope) == len(assignment)
 
     def holds(self, assignment):
         """returns the value of Constraint con evaluated in assignment.
@@ -100,6 +103,7 @@ class CSP(object):
         return all(con.holds(assignment)
                    for con in self.constraints
                    if con.can_evaluate(assignment))
+
     def show(self):
         plt.ion()  # interactive
         plt.title(self.title)
@@ -121,22 +125,21 @@ class CSP(object):
             x, y = var.position
             plt.text(x, y, var.name, bbox=var_bbox, ha='center')
 
-    
 
 def showConstraintFail(constraint):
-        con_bbox = dict(boxstyle="square,pad=1.0", color="green")
-        for var in constraint.scope:
-            ax.annotate(constraint.string, var.position, xytext=constraint.position, color = 'red', # type: ignore
-                            arrowprops={'arrowstyle': '-', "color":"r"}, bbox=con_bbox,
-                            ha='center')
-        if (PAUSE):
-            plt.pause(PAUSE_LENGTH)
-        for var in constraint.scope:
-            ax.annotate(constraint.string, var.position, xytext=constraint.position, # type: ignore
-                            arrowprops={'arrowstyle': '-'}, bbox=con_bbox,
-                            ha='center')
-            
+    con_bbox = dict(boxstyle="square,pad=1.0", color="green")
+    for var in constraint.scope:
+        ax.annotate(constraint.string, var.position, xytext=constraint.position, color='red',  # type: ignore
+                    arrowprops={'arrowstyle': '-', "color": "r"}, bbox=con_bbox,
+                    ha='center')
+    if (PAUSE):
+        plt.pause(PAUSE_LENGTH)
+    for var in constraint.scope:
+        ax.annotate(constraint.string, var.position, xytext=constraint.position,  # type: ignore
+                    arrowprops={'arrowstyle': '-'}, bbox=con_bbox,
+                    ha='center')
+
+
 def renderGraph(variables, constraint):
     csp = CSP("CSP", variables, constraint)
     return csp
-
