@@ -82,9 +82,24 @@ def predict_post():
 
     prediction_dict: dict = ndarray_to_dict(prediction)
 
-    run_csp([])  # TODO: far passare i dati per il csp
+    prediction_dict_out: dict = {}
 
-    return jsondump(prediction_dict)
+    csp = run_csp(prediction, lower_limit=80)  # TODO: far passare i dati per il csp, fare che il lower limit è a scelta per l'utente
+
+
+    array = []      # sequanza di 0 e 1 che indicano se il topic è da prendere o meno
+    for key in csp[0]:
+        if "X" in str(key):
+            array.append(dict[key])
+
+    #scorro il dizionario e prendo solo i valori che mi interessano
+    for i in range(0, 10):
+        if array[i] == 1:
+            prediction_dict_out[i] = prediction_dict[i]
+
+
+
+    return jsondump(prediction_dict_out)
 
 
 run(host='localhost', port=8080, debug=True, reloader=True if DEBUG else None)

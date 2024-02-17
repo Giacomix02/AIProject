@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from constraintGraph import Variable, Constraint, renderGraph
 from dfs import dfs_solve_all
 
