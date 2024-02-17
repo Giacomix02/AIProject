@@ -11,6 +11,8 @@ let lowerLimit = document.getElementById("lower-limit") as HTMLInputElement
 
 let data: JSON
 
+createRow(2, 0.5)
+
 
 /*check if the input have text, and abilitate it*/
 inputText.oninput = () => {
@@ -44,7 +46,7 @@ button.onclick = async () => {
     inputText.classList.add("color-red")
     
 
-    let link = "http://localhost:8080/predict"+"?text="+input+"&lower_limit=&upper_limit="
+    let link = "http://localhost:8080/predict"+"?text="+input+"&lower_limit="+lowerLimit.value+"&upper_limit="+upperLimit.value
 
     console.log(link)
     let response = await fetch(link, {
