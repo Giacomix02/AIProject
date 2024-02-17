@@ -1,5 +1,5 @@
 from Code.Server.CSP.constraintGraph import Variable, Constraint, renderGraph
-from Code.Server.CSP.dfs import dfs_solve_all
+from Code.Server.CSP.dfs import dfs_solve1
 
 def run_csp(values: list, results_limit: int = None, upper_limit: int = None, lower_limit: int = None) -> list:
     if values is None:
@@ -27,14 +27,15 @@ def run_csp(values: list, results_limit: int = None, upper_limit: int = None, lo
     #                   )
     j = 0
     for i in range(0, 20, 2):
-        print(variables[i], variables[i + 1])
         constraint.append(Constraint([variables[i], variables[i + 1]],
                                      lambda x, y:
                                      (lower_limit <= y <= upper_limit and x == 1) or (not (lower_limit <= y <= upper_limit) and x == 0),
                                      f"{lower_limit} <= X{j}*{values[j]} <= {upper_limit}"))
         j += 1
     csp = renderGraph(variables, constraint)
-    return dfs_solve_all(csp)
+    results: dict = dfs_solve1(csp)
+
+    return (csp.variables, results)
 
 
 def times_le(x, y, z):
