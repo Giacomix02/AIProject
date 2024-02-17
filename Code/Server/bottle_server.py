@@ -67,7 +67,7 @@ def predict_post():
             var_v = variables.pop()  # prendo il valore
             var_x = variables.pop()  # e il numero x associato al valore, esso determina se il valore è da scartare o no
             if results[var_x] == 1:  # se il numero x è 1, non va scartato
-                number = str(var_x).split()[1]  # prendo il numero
+                number = int(str(var_x)[1])  # prendo il numero
                 to_return[number] = results[var_v]  # lo aggiungo al dizionario da ritornare
     else:  # nel caso in cui non specifico limiti
         to_return: dict = list_to_dict(prediction_integer)  # converto la lista della prediction in un dizionario
