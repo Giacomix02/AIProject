@@ -44,9 +44,9 @@ def predict_post():
     lower_limit = None
     upper_limit = None
 
-    if(lover_limit_request is not ""):
+    if lover_limit_request != "":
         lower_limit = int(lover_limit_request)
-    if(upper_limit_request is not ""):
+    if upper_limit_request != "":
         upper_limit = int(upper_limit_request)
 
 
