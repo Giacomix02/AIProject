@@ -41,6 +41,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.node_modules
 
 __pycache__
 
